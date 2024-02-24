@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name><![CDATA[Show User info in list]]></name>
+  <code><![CDATA[show-users-infos-in-list]]></code>
+	<version><![CDATA[1.0]]></version>
+	<author><![CDATA[REDS PRAI]]></author>
+	<link><![CDATA[https://www.agenciaprai.com/]]></link>
+		
+	<file path="admin/controller/user/user.php" error="skip">
+		<operation>
+			<search><![CDATA[$data['users'][] = array(]]></search>
+			<add position="before"><![CDATA[$this->load->model('user/user_group');]]></add>
+		</operation>
+		<operation>
+			<search index="0"><![CDATA[$data['users'][] = array(]]></search>
+			<add position="replace"><![CDATA[
+			$user_group = $this->model_user_user_group->getUserGroup($result['user_group_id']);
+			
+			$data['users'][] = array(
+			'username'   => $result['username'],
+				'fullname'   => $result['firstname']. ' '.$result['lastname'],
+				'user_group' => $user_group['name'],
+				'email'   	 => $result['email'],
+			]]></add>
+		</operation>
+	</file>
+	<file path="" error="skip">
+		<operation>
+			<search><![CDATA[<td class="text-left">{% if sort == 'status' %}]]></search>
+			<add position="before"><![CDATA[
+			<td class="text-left">{{ column_username }}</td>
+									<td class="text-left">{{ column_email }}</td>
+									<td class="text-left">{{ column_user_group }}</td>
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[<td class="text-left">{{ user.status }}</td>]]></search>
+			<add position="before"><![CDATA[
+			<td class="text-left">{{ user.fullname }}</td>
+									<td class="text-left">{{ user.email }}</td>
+									<td class="text-left">{{ user.user_group }}</td>
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[<td class="text-center" colspan="5">{{ text_no_results }}</td>]]></search>
+			<add position="replace"><![CDATA[<td class="text-center" colspan="8">{{ text_no_results }}</td>]]></add>
+		</operation>
+	</file>
+	<file path="admin/language/pt-br/user/user.php" error="skip">
+		<operation>
+			<search><![CDATA[// Column]]></search>
+			<add position="after"><![CDATA[
+			$_['column_username']       = 'Usuário';
+$_['column_email']       		= 'Email';
+$_['column_user_group']     = 'Grupo';
+			]]></add>
+		</operation>
+	</file>
+		
+</modification>
