@@ -56,5 +56,15 @@ $_['column_user_group']     = 'Grupo';
 			]]></add>
 		</operation>
 	</file>
+	<file path="admin/language/en-gb/user/user.php" error="skip">
+		<operation>
+			<search><![CDATA[// Column]]></search>
+			<add position="after"><![CDATA[
+			$_['column_username']       = 'User name';
+$_['column_email']       		= 'Email';
+$_['column_user_group']     = 'Group';
+			]]></add>
+		</operation>
+	</file>
 		
 </modification>
